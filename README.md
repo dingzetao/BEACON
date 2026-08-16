@@ -6,24 +6,6 @@ This repository provides a clean demo of the BEACON computational pipeline descr
 
 > **Manuscript status:** under review. Journal / DOI will be updated upon acceptance.
 
-**Related manuscript**
-
-*Integrative Single-cell and Spatial Analyses Define a Prognostic Myeloid-Tumor Niche that Confers Therapeutic Vulnerability in Immunotherapy-Resistant Muscle-Invasive Bladder Cancer*
-
-Zetao Ding<sup>1,#</sup>, Renjie Wang<sup>1,#</sup>, Haodong Chi<sup>1,#</sup>, Zijie Xu<sup>1</sup>, Zheng Tang<sup>1</sup>, Jifu Ge<sup>1</sup>, Yin Yang<sup>1</sup>, Kaiying Chen<sup>1</sup>, Junru Lu<sup>1</sup>, Qi Pan<sup>1</sup>, Yigang Zeng<sup>1</sup>, Fang Zhang<sup>1</sup>, Zhixian Yao<sup>2,\*</sup>, Zhihong Liu<sup>1,\*</sup>
-
-<sup>1</sup> Department of Urology, Shanghai General Hospital, Shanghai Jiao Tong University School of Medicine, Shanghai, China  
-<sup>2</sup> Department of Urology, Institute of Molecular Medicine, Renji Hospital, Shanghai Jiao Tong University School of Medicine, Shanghai, China  
-
-<sup>#</sup> These authors contributed equally.  
-<sup>\*</sup> Corresponding authors.
-
-**Corresponding authors**
-
-- Zhixian Yao, Ph.D. — [yzxbrooklyn@sjtu.edu.cn](mailto:yzxbrooklyn@sjtu.edu.cn)  
-- Zhihong Liu, Ph.D., Prof. — [drzhihongliu@sjtu.edu.cn](mailto:drzhihongliu@sjtu.edu.cn)
-
-For data access requests, see [`data/README.md`](data/README.md).
 
 ## Overview
 
