@@ -1,0 +1,38 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Environments
+.venv/
+venv/
+.env
+.conda/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data & outputs (keep directory placeholders only)
+data/**
+!data/README.md
+!data/**/.gitkeep
+outputs/**
+!outputs/.gitkeep
+
+# Model weights / large arrays
+*.pth
+*.pt
+*.npy
+*.tif
+*.tiff
+*.svs
+*.ndpi
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+*.swp

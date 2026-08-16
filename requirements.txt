@@ -1,0 +1,16 @@
+torch>=2.0.0
+torchvision>=0.15.0
+torch-geometric>=2.4.0
+numpy>=1.23
+pandas>=1.5
+scipy>=1.9
+scikit-learn>=1.2
+matplotlib>=3.6
+opencv-python>=4.7
+tqdm>=4.64
+PyYAML>=6.0
+
+# Optional: required only for UNI feature extraction / dense TMA inference
+# Install TRIDENT separately following:
+#   https://github.com/mahmoodlab/TRIDENT
+# trident

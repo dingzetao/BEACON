@@ -1,0 +1,16 @@
+# Toy smoke-test config (no UNI / TRIDENT / real H&E required)
+# 1) python scripts/make_toy_demo.py
+# 2) python scripts/03_train_gat.py --config configs/toy_demo.yaml
+
+train:
+  feature_dir: data/toy/features
+  train_samples: [toy_train_A, toy_train_B, toy_train_C]
+  val_samples: [toy_val_A, toy_val_B]
+  input_dim: 64
+  k_neighbors: 6
+  epochs: 50
+  lr: 1.0e-3
+  weight_decay: 1.0e-5
+  seed: 1
+  log_every: 10
+  output_dir: outputs/toy_demo

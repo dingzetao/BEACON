@@ -1,0 +1,113 @@
+# Example config for Tumor_EGFR
+# Replace all placeholder paths with your local Visium / deconvolution files.
+# Set target_column to the cell2location abundance column for Tumor_EGFR.
+#
+# Sample split (as in the paper):
+#   Train: ST1, ST2, ST3, BC_B1, BC_C1, BC_D1
+#   Val:   ST4, BC_A1
+
+features:
+  target_column: q05cell_abundance_w_sf_Tumor_EGFR
+  output_dir: data/features/Tumor_EGFR
+  patch_size: 128
+  batch_size: 64
+  uni_weights_path: null   # optional offline UNI checkpoint
+  samples:
+    - name: ST1
+      image: /path/to/ST1.tif
+      positions: /path/to/ST1/spatial/tissue_positions_list.csv
+      deconv: /path/to/ST1_q05_cell_abundance_w_sf.csv
+    - name: ST2
+      image: /path/to/ST2.tif
+      positions: /path/to/ST2/spatial/tissue_positions_list.csv
+      deconv: /path/to/ST2_q05_cell_abundance_w_sf.csv
+    - name: ST3
+      image: /path/to/ST3.tif
+      positions: /path/to/ST3/spatial/tissue_positions_list.csv
+      deconv: /path/to/ST3_q05_cell_abundance_w_sf.csv
+    - name: ST4
+      image: /path/to/ST4.tif
+      positions: /path/to/ST4/spatial/tissue_positions_list.csv
+      deconv: /path/to/ST4_q05_cell_abundance_w_sf.csv
+    - name: BC_B1
+      image: /path/to/BC_B1.jpg
+      positions: /path/to/BC_B1/tissue_positions.csv
+      deconv: /path/to/BC_B1_q05_cell_abundance_w_sf.csv
+    - name: BC_C1
+      image: /path/to/BC_C1.jpg
+      positions: /path/to/BC_C1/tissue_positions.csv
+      deconv: /path/to/BC_C1_q05_cell_abundance_w_sf.csv
+    - name: BC_D1
+      image: /path/to/BC_D1.jpg
+      positions: /path/to/BC_D1/tissue_positions.csv
+      deconv: /path/to/BC_D1_q05_cell_abundance_w_sf.csv
+    - name: BC_A1
+      image: /path/to/BC_A1.jpg
+      positions: /path/to/BC_A1/tissue_positions.csv
+      deconv: /path/to/BC_A1_q05_cell_abundance_w_sf.csv
+
+train:
+  feature_dir: data/features/Tumor_EGFR
+  train_samples: [ST1, ST2, ST3, BC_B1, BC_C1, BC_D1]
+  val_samples: [ST4, BC_A1]
+  input_dim: 1024
+  k_neighbors: 6
+  epochs: 300
+  lr: 1.0e-4
+  weight_decay: 1.0e-5
+  seed: 1
+  log_every: 10
+  output_dir: outputs/Tumor_EGFR
+
+infer_visium:
+  weights: outputs/Tumor_EGFR/gat_abundance_head.pth
+  output_dir: outputs/Tumor_EGFR/figures_dense
+  patch_size: 128
+  stride: 128
+  mask_min_fraction: 0.10
+  batch_size: 64
+  uni_weights_path: null
+  samples:
+    - name: ST1
+      split: Train
+      image: /path/to/ST1.tif
+      positions: /path/to/ST1/spatial/tissue_positions_list.csv
+    - name: ST2
+      split: Train
+      image: /path/to/ST2.tif
+      positions: /path/to/ST2/spatial/tissue_positions_list.csv
+    - name: ST3
+      split: Train
+      image: /path/to/ST3.tif
+      positions: /path/to/ST3/spatial/tissue_positions_list.csv
+    - name: BC_B1
+      split: Train
+      image: /path/to/BC_B1.jpg
+      positions: /path/to/BC_B1/tissue_positions.csv
+    - name: BC_C1
+      split: Train
+      image: /path/to/BC_C1.jpg
+      positions: /path/to/BC_C1/tissue_positions.csv
+    - name: BC_D1
+      split: Train
+      image: /path/to/BC_D1.jpg
+      positions: /path/to/BC_D1/tissue_positions.csv
+    - name: ST4
+      split: Val
+      image: /path/to/ST4.tif
+      positions: /path/to/ST4/spatial/tissue_positions_list.csv
+    - name: BC_A1
+      split: Val
+      image: /path/to/BC_A1.jpg
+      positions: /path/to/BC_A1/tissue_positions.csv
+
+infer_tma:
+  weights: outputs/Tumor_EGFR/gat_abundance_head.pth
+  core_image_dir: data/tma_cores
+  output_dir: outputs/Tumor_EGFR/tma_dense
+  summary_csv: outputs/Tumor_EGFR/tma_dense/core_mean_abundance.csv
+  patch_size: 128
+  stride: 128
+  mask_min_fraction: 0.10
+  batch_size: 64
+  uni_weights_path: null
