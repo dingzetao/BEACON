@@ -2,10 +2,7 @@
 
 **BEACON** (**B**ladder cancer **E**valuation via **A**ttention-based **C**ross-modal **O**nco-**N**iche) maps routine H&E histology to spatial abundances of Tumor_EGFR and Mac_EREG niche states for ICB risk stratification in muscle-invasive bladder cancer (MIBC).
 
-This repository provides a clean demo of the BEACON computational pipeline described in our manuscript.
-
-> **Manuscript status:** under review. Journal / DOI will be updated upon acceptance.
-
+This repository provides a clean demo of the BEACON computational pipeline.
 
 ## Overview
 
@@ -27,7 +24,7 @@ Pipeline steps:
 4. **Visium dense inference** – sliding-window UNI + GAT heatmaps on whole H&E images  
 5. **TMA / clinical inference** – apply the trained model to tissue-microarray cores
 
-Example Visium split used in the manuscript configs:
+Example Visium split used in the configs:
 
 - **Train:** ST1, ST2, ST3, BC_B1, BC_C1, BC_D1  
 - **Val:** ST4, BC_A1  
@@ -133,7 +130,7 @@ Each `{sample}_UNI_features.csv` contains:
 
 In the YAML configs, set `target_column` to the abundance column name in your cell2location table (examples use `q05cell_abundance_w_sf_Tumor_EGFR` / `q05cell_abundance_w_sf_Mac_EREG`).
 
-### Model defaults (manuscript)
+### Model defaults
 
 | setting | value |
 |---|---|
@@ -144,19 +141,6 @@ In the YAML configs, set `target_column` to the abundance column name in your ce
 | Target transform | `log1p` (inverse `expm1` at inference) |
 | Loss / optimizer | MSE + Adam (`lr=1e-4`, `wd=1e-5`) |
 | Epochs | 300 |
-
-## Citation
-
-If you use this code, please cite our manuscript (details will be updated after publication):
-
-```bibtex
-@article{Ding2026BEACON,
-  title={Integrative Single-cell and Spatial Analyses Define a Prognostic Myeloid-Tumor Niche that Confers Therapeutic Vulnerability in Immunotherapy-Resistant Muscle-Invasive Bladder Cancer},
-  author={Ding, Zetao and Wang, Renjie and Chi, Haodong and Xu, Zijie and Tang, Zheng and Ge, Jifu and Yang, Yin and Chen, Kaiying and Lu, Junru and Pan, Qi and Zeng, Yigang and Zhang, Fang and Yao, Zhixian and Liu, Zhihong},
-  year={2026},
-  note={Manuscript under review}
-}
-```
 
 ## License
 
