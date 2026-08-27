@@ -30,9 +30,44 @@ outputs/**
 *.tiff
 *.svs
 *.ndpi
+*.pkl
+*.pickle
+*.h5
+*.h5ad
+*.ckpt
 
 # OS / IDE
 .DS_Store
 .idea/
 .vscode/
 *.swp
+
+# ---------------------------------------------------------------------------
+# Benchmark runtime artifacts (keep scripts/configs; ignore local run outputs)
+# ---------------------------------------------------------------------------
+benchmark/istar/
+benchmark/beacon_vs_istar/
+benchmark/**/prepared/
+benchmark/**/logs/
+benchmark/**/weights/
+benchmark/**/__pycache__/
+
+# Large result trees; allow small metrics tables only
+benchmark/beacon_vs_*/results/**
+!benchmark/beacon_vs_*/results/
+!benchmark/beacon_vs_*/results/metrics_summary.csv
+!benchmark/beacon_vs_*/results/metrics_per_sample.csv
+
+# iStar-only config (if present locally)
+benchmark/configs/benchmark_visium.yaml
+
+# ---------------------------------------------------------------------------
+# GUI runtime / local demo images
+# ---------------------------------------------------------------------------
+gui/WSI_data/
+gui_runs/
+gui/**/__pycache__/
+*.jpg
+*.jpeg
+*.png
+!benchmark/figures/**

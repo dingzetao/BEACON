@@ -45,10 +45,29 @@ BEACON/
 │   └── infer.py            # dense / TMA inference
 ├── scripts/                # CLI entry points
 ├── configs/                # YAML examples
+├── benchmark/              # Visium Protocol B baselines (see benchmark/README.md)
+├── gui/                    # NiceGUI inference workbench
 ├── data/                   # user data (not tracked; see data/README.md)
 └── outputs/                # run outputs (not tracked)
 ```
 
+## Benchmarks (Protocol B)
+
+Spot-level H&E → abundance comparison vs **Hist2ST-B**, **HisToGene-B**, **Path2Space-B**, and **UNI+MLP** on the same Visium split and cell2location labels. Details: [`benchmark/README.md`](benchmark/README.md).
+
+Edit local paths in `benchmark/configs/*.yaml` before running. Prepared tensors, logs, and heavy result trees are gitignored.
+
+## Inference GUI
+
+Local NiceGUI workbench for dense Tumor_EGFR / Mac_EREG heatmaps (path-based input on the compute server). See [`GUI_README.md`](GUI_README.md).
+
+```bash
+pip install -r requirements-gui.txt
+# from repo root, on a GPU node with TRIDENT/UNI available:
+python -m gui
+```
+
+Point the UI at your GAT checkpoint paths (defaults assume a lab layout under `decoder/gat_seed/...`, which is not shipped here).
 ## Installation
 
 ```bash

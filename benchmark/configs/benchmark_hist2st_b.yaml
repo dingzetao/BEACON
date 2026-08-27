@@ -1,0 +1,105 @@
+# Hist2ST-B vs BEACON — Visium Protocol B
+# Hist2ST backbone (CNN+Transformer+GNN), abundance endpoint (log1p+MSE).
+# Run on a GPU compute node (not login node).
+
+project_root: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/pathospatial_model
+
+output_dir: benchmark/beacon_vs_hist2st/results
+prepared_dir: benchmark/beacon_vs_hist2st/prepared
+
+train_samples: [ST1, ST2, ST3, BC_B1, BC_C1, BC_D1]
+val_samples: [ST4, BC_A1]
+
+hist2st:
+  # Hist2ST defaults (HIST2ST_train.py tag=5-7-2-8-4-16-32)
+  fig_size: 112
+  kernel_size: 5
+  patch_size: 7
+  depth1: 2
+  depth2: 8
+  depth3: 4
+  heads: 16
+  channel: 32
+  dropout: 0.2
+  lr: 0.00001
+  epochs: 350
+  seed: 12000
+  n_pos: 128
+  neighbor: 4
+  prune: Grid
+  policy: mean
+  # Visium stability (ST2~3800): avoid NaN collapse seen with bf16+bake.
+  # bake off; fp32; checkpoint on; existing prepared/*.pt get self-loops at load.
+  zinb: 0.0
+  bake: 0
+  lamb: 0.0
+  bake_no_grad: true
+  n_genes: 1
+  precision: 32-true
+  use_checkpoint: true
+  gradient_clip_val: 1.0
+
+gatraining:
+  input_dim: 1024
+  k_neighbors: 6
+
+targets:
+  Tumor_EGFR:
+    cell2location_column: q05cell_abundance_w_sf_Tumor_EGFR
+    cell2location_column_legacy: q05cell_abundance_w_sf_tumor_CD59
+    beacon_weights: decoder/gat_seed/model_weights/tumor_CD59/gat_abundance_head.pth
+    uni_feature_dir: encoder/uni_v1/tumor_CD59/extracted_features_csv
+  Mac_EREG:
+    cell2location_column: q05cell_abundance_w_sf_Mac_EREG
+    cell2location_column_legacy: q05cell_abundance_w_sf_Mφ_SOD2
+    beacon_weights: decoder/gat_seed/model_weights/mac_sod2/gat_abundance_head.pth
+    uni_feature_dir: encoder/uni_v1/Mac_SOD2/extracted_features_csv
+
+samples:
+  - paper_name: ST1
+    internal_name: BCB1_0128
+    he_image: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/data/HE_rawscan/BCB1_0128.tif
+    positions_csv: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/data/BCB1_0128/spatial/tissue_positions_list.csv
+    deconv_csv: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/cell2location/write/BCB1_0128_q05_cell_abundance_w_sf.csv
+
+  - paper_name: ST2
+    internal_name: 11.30T1
+    he_image: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/data/HE_rawscan/11.30T1.tif
+    positions_csv: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/data/11.30T1/spatial/tissue_positions_list.csv
+    deconv_csv: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/cell2location/write/1130T1_q05_cell_abundance_w_sf.csv
+
+  - paper_name: ST3
+    internal_name: 121T2
+    he_image: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/data/HE_rawscan/121T2.tif
+    positions_csv: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/data/121T2/spatial/tissue_positions_list.csv
+    deconv_csv: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/cell2location/write/121T2_q05_cell_abundance_w_sf.csv
+
+  - paper_name: ST4
+    internal_name: 113BC
+    he_image: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/data/HE_rawscan/113BC.tif
+    positions_csv: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/data/113BC/spatial/tissue_positions_list.csv
+    deconv_csv: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/cell2location/write/113BC_q05_cell_abundance_w_sf.csv
+
+  - paper_name: BC_B1
+    internal_name: GEO_B1
+    he_image: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/spatial transcriptome GEO/data_GEO/GSE171351/tissue_image/GSM5224028_B1.jpg
+    positions_csv: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/spatial transcriptome GEO/data_GEO/GSE171351/tissue_position/B1.csv
+    deconv_csv: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/spatial transcriptome GEO/cell2location/write/BC_B1_q05_cell_abundance_w_sf.csv
+
+  - paper_name: BC_C1
+    internal_name: GEO_C1
+    he_image: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/spatial transcriptome GEO/data_GEO/GSE171351/tissue_image/GSM5224029_C1.jpg
+    positions_csv: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/spatial transcriptome GEO/data_GEO/GSE171351/tissue_position/C1.csv
+    deconv_csv: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/spatial transcriptome GEO/cell2location/write/BC_C1_q05_cell_abundance_w_sf.csv
+
+  - paper_name: BC_D1
+    internal_name: GEO_D1
+    he_image: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/spatial transcriptome GEO/data_GEO/GSE171351/tissue_image/GSM5224030_D1.jpg
+    positions_csv: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/spatial transcriptome GEO/data_GEO/GSE171351/tissue_position/D1.csv
+    deconv_csv: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/spatial transcriptome GEO/cell2location/write/BC_D1_q05_cell_abundance_w_sf.csv
+
+  - paper_name: BC_A1
+    internal_name: GEO_A1
+    he_image: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/spatial transcriptome GEO/data_GEO/GSE171351/tissue_image/GSM5224027_A1.jpg
+    positions_csv: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/spatial transcriptome GEO/data_GEO/GSE171351/tissue_position/A1.csv
+    deconv_csv: /dssg/home/acct-drzhihongliu/drzhihongliu-user2/script/spatial_transcriptome/spatial transcriptome GEO/cell2location/write/BC_A1_q05_cell_abundance_w_sf.csv
