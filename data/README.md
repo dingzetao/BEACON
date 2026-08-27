@@ -41,7 +41,3 @@ For academic collaboration or data access requests related to the study, please 
 - Zhihong Liu, Ph.D., Prof. — [drzhihongliu@sjtu.edu.cn](mailto:drzhihongliu@sjtu.edu.cn)
 
 Please include your name, affiliation, and intended use in the email.
-
-## Privacy
-
-Do **not** upload patient-identifiable whole-slide images, TMA cores, clinical tables, or raw spatial transcriptomic counts to the public repository.
